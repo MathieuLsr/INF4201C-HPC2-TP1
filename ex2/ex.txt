@@ -1,9 +1,0 @@
-Ecrire un serveur qui attend une requête de connexion sur son port d’écoute et qui
-affiche ensuite le flot de caractères émit par le client qui s’y connecte. Pour cela, le
-serveur reçoit en argument sur la ligne de commande le port sur lequel il va attendre les
-connexions des clients
-A l’aide de votre navigateur préféré, connectez-vous sur ce serveur et observer les
-informations transmises. En déduire le codage d’une requête http (essayez plusieurs
-requêtes avec des demandes de pages web différentes) ?
-Attention : pensez à changer les paramètres réseaux de votre navigateur pour qu’il
-n’utilise pas les proxy ! Notez aussi qu'il y'a deux saut de ligne après une requête...
