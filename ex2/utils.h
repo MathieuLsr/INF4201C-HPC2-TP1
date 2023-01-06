@@ -10,6 +10,5 @@
 
 #define SIZE_MAX 500
 
-int InitPacketReceive(int PORT) ;
-int SendNewPacket(const char* SERVER, int PORT, const char* message, int size) ; 
-int readSocket(int socket_server, char buffer[]); 
+int InitSocketReceive_TCP(int PORT) ;
+size_t readSocket(int socket_server, char buffer[]); 

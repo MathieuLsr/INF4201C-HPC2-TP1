@@ -16,4 +16,3 @@ size_t readSocket(int socket, char* buffer) ;
 
 int sendMsg(int sockfd, char *msg, size_t msgSize) ;
 int SendNewPacket_TCP(const char* SERVER, int PORT, char* message, int size) ; 
-int SendNewPacket_UDP(const char* SERVER, int PORT, char* message, int size) ; 

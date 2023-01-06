@@ -1,5 +1,8 @@
 #include "utils.h"
 
+/*
+Identique à l'exercice 2 
+*/
 int InitPacketReceive(int PORT) {
 
 
@@ -25,6 +28,9 @@ int InitPacketReceive(int PORT) {
 
 }
 
+/*
+Identique à l'exercice 2 
+*/
 size_t readSocket(int socket, char* buffer){
         
         struct sockaddr_in c_ain;   
@@ -42,10 +48,13 @@ size_t readSocket(int socket, char* buffer){
         return msgSize ;
 }
 
+
 int sendMsg(int sockfd, char *msg, size_t msgSize)
 {
 
-    if (write(sockfd, msg, msgSize) < 0) { //Send bytes
+    // Écrit dans le file descriptor de la socket
+    if (write(sockfd, msg, msgSize) < 0) { 
+        // Utilisation de perror en cas d'erreur
         perror("error writing to socket");
         return -1;
     }
@@ -53,43 +62,13 @@ int sendMsg(int sockfd, char *msg, size_t msgSize)
     return 0;
 }
 
-
-int SendNewPacket_UDP(const char* SERVER, int PORT, char* message, int size){
-
-    struct hostent *hp;
-    struct sockaddr_in s_ain;
-    unsigned char byte;
-    int socket_client; 
-
-    hp = gethostbyname(SERVER) ;
-    bzero((char *)&s_ain, sizeof(s_ain));
-    s_ain.sin_family = AF_INET;
-    memcpy(&(s_ain.sin_addr),  hp->h_addr_list[0], hp->h_length);
-    s_ain.sin_port = htons(PORT);
-
-    socket_client = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-
-    if(connect(socket_client, (struct sockaddr*) &s_ain, sizeof(s_ain)) == -1 ) {
-        perror("Failed to connect : ") ; 
-        return -1;
-    }
-
-
-    if (sendMsg(socket_client, message, size) != 0) {
-        close(socket_client);
-        return 1;
-    }
-    //printf("%s Send is done \n", "[PREFIX]");
-
-
-    return socket_client ; 
-}
-
 int SendNewPacket_TCP(const char* SERVER, int PORT, char* str, int size){
 
+    /*
+    Paramétrage de la socket : identique à l'exercice précédent 
+    */
     struct hostent *hp;
     struct sockaddr_in s_ain;
-    unsigned char byte;
     int socket_client; 
 
     hp = gethostbyname(SERVER) ;
@@ -103,20 +82,24 @@ int SendNewPacket_TCP(const char* SERVER, int PORT, char* str, int size){
     s_ain.sin_family = AF_INET;
     memcpy(&(s_ain.sin_addr),  hp->h_addr_list[0], hp->h_length);
     s_ain.sin_port = htons(PORT);
+    /***********************************/
 
+
+    // Création de la socket en mode TCP
     socket_client = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 
+    // Connexion au serveur 
     if(connect(socket_client, (struct sockaddr*) &s_ain, sizeof(s_ain)) == -1 ) {
-        fprintf(stderr, "%s\n", "err connect");
+        perror("connect failed : ") ;
         return -1;
     }
 
-
+    // Envoie du message et traitement des errors 
     if (sendMsg(socket_client, str, size) != 0) {
         close(socket_client);
         return -1;
     }
-    //printf("%s Send is done \n", "[PREFIX]");
+
     return socket_client ; 
 }
 
